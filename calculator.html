@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="container">
+            <div class="upper">
+                <input type="text" name="result" class="result" placeholder="0" id="display">
+            </div>
+            <div class="lower">
+                <table>
+                    <tr align="center">
+                        <td><button class="icon1" onclick="clearDisplay()">C</button></td>
+                        <td><button onclick="operator('/')">/</button></td>
+                        <td><button onclick="operator('*')">*</button></td>
+                        <td><button onclick="operator('-')">-</button></td>
+                    </tr>
+                    <tr>
+                        <td><button onclick="num(7)">7</i></button></td>
+                        <td><button onclick="num(8)">8</button></td>
+                        <td><button onclick="num(9)">9</button></td>
+                        <td rowspan="2"><button class="common" onclick="operator('+')">+</button></td>
+                    </tr>
+                    <tr>
+                        <td><button onclick="num(4)">4</button></td>
+                        <td><button onclick="num(5)">5</button></td>
+                        <td><button onclick="num(6)">6</button></td>
+                    </tr>
+                    <tr>
+                        <td><button onclick="num(1)">1</button></td>
+                        <td><button onclick="num(2)">2</button></td>
+                        <td><button onclick="num(3)">3</button></td>
+                        <td rowspan="2"><button onclick="equal()" class="common"><i class="bi bi-arrow-return-left"></i></button></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><button onclick="num(0)" class="zero">0</button></td>
+                        <td><button>.</button></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+       let display = document.getElementById("display");
+
+        // Function to handle number button clicks
+        function num(value) {
+            if (display.value === "0" && value !== ".") {
+                display.value = value; // Replace 0 with new number
+            } else {
+                display.value += value; // Append new number
+            }
+        }
+
+        // Function to handle operator button clicks
+        function operator(val) {
+            let lastChar = display.value.slice(-1);
+            if (display.value !== "" && !['+', '-', '*', '/'].includes(lastChar)) {
+                display.value += val;
+            }
+        }
+
+        // Function to clear display
+        function clearDisplay() {
+            display.value = "0";
+        }
+
+        // Function to delete last character
+        function deleteLast() {
+            if (display.value.length > 1) {
+                display.value = display.value.slice(0, -1);
+            } else {
+                display.value = "0"; // Reset to 0 if only one character left
+            }
+        }
+
+        // Function to evaluate expression
+        function equal() {
+            try {
+                let lastChar = display.value.slice(-1);
+                if (!['+', '-', '*', '/'].includes(lastChar)) {
+                    display.value = eval(display.value); // Calculate only if last character isn't an operator
+                }
+            } catch {
+                display.value = "Error";
+            }
+        }
+    </script>
+</body>
+</html>
